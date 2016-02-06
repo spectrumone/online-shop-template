@@ -26,9 +26,10 @@ class Cart(object):
             self.cart[product_id] = {'quantity': 0,
                                      'price': str(product.price)}
         if update_quantity:
+            print('quantity', quantity)
             self.cart[product_id]['quantity'] = quantity
         else:
-            self.cart[product_id]['quantity'] = += quantity
+            self.cart[product_id]['quantity'] += quantity
 
     def save(self):
         # Update the session cart
@@ -74,4 +75,4 @@ class Cart(object):
     def clear(self):
         # remove cart from session
         del self.session[settings.CART_SESSION_ID]
-            self.session.modified = True
+        self.session.modified = True
