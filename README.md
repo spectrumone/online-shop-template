@@ -1,6 +1,9 @@
 # online-shop-template
 A comprehensive online shop template to cover most online shop features.
 
+###Notes
+* Coded in python3
+
 ###Current Features
 * Product Catalog
 * Shopping cart using django sessions
@@ -8,9 +11,10 @@ A comprehensive online shop template to cover most online shop features.
 * Asynchronous notifications to cutomers using Celery
 
 ###Installation
-1. `pip install -r requirements.txt`
-2. install rabbitmq from the <b>RabbitMQ</b> site.
-3. check if rabbitmq-server is installed by running: `sudo service rabbitmq-server status`
+1. To create a virtualenv for python3 (using vitualenvwrapper): `mkvirtualenv --python=/usr/bin/python3 <name of venv>`.
+2. `pip install -r requirements.txt`
+3. install rabbitmq from the <b>RabbitMQ</b> site.
+4. check if rabbitmq-server is installed by running: `sudo service rabbitmq-server status`
 
 ###Usage
 1. run <b>Celery</b>: `celery -A myshop worker -l info` (captures the terminal)
