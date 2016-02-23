@@ -114,6 +114,9 @@ CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# Django Paypal Creds
+PAYPAL_RECEIVER_EMAIL = ''
+PAYPAL_TEST = True
 
 try:
     from .local_settings import *
