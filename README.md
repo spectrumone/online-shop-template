@@ -8,7 +8,10 @@ A comprehensive online shop template to cover most online shop features.
 * Product Catalog
 * Shopping cart using django sessions
 * Customer orders management
-* Asynchronous notifications to cutomers using Celery
+* Asynchronous notifications to customers using Celery
+* Integrate a payment gateway
+* Manage payment notifications
+* Export orders to CSV files
 
 ###Installation
 1. To create a virtualenv for python3 (using vitualenvwrapper): `mkvirtualenv --python=/usr/bin/python3 <name of venv>`.
@@ -27,14 +30,11 @@ A comprehensive online shop template to cover most online shop features.
 1. run flower on a separate terminal: `celery -A myshop flower` (captures the terminal)
 
 ###To Do
-1. Integrate a payment gateway
-2. Manage payment notifications
-3. Export orders to CSV files
-4. Generate PDF invoices dynamically
-5. Create coupon system to apply discounts
-6. Adding internationalization to online shop
-7. Use <b>Rosetta</b> to manage translations
-8. Translating modles using <b>django-parler</b>
-9. Build product recommendation engine
-10. Refactor app to use class based views instead
-11. Refactor for best practices
+1 Generate PDF invoices dynamically
+2. Add CSS files for PDF generation to work
+3. Automated PDF invoice sending after purchase (currently not configured from `settings.py`)
+4. Create coupon system to apply discounts
+5. Adding internationalization to online shop
+6. Build product recommendation engine
+7. Refactor app to use class based views instead
+8. Refactor for best practices
