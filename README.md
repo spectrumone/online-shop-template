@@ -30,7 +30,7 @@ A comprehensive online shop template to cover most online shop features.
 1. run flower on a separate terminal: `celery -A myshop flower` (captures the terminal)
 
 ###To Do
-1 Generate PDF invoices dynamically
+1. Generate PDF invoices dynamically
 2. Add CSS files for PDF generation to work
 3. Automated PDF invoice sending after purchase (currently not configured from `settings.py`)
 4. Create coupon system to apply discounts
