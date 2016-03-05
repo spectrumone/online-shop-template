@@ -24,7 +24,8 @@ A comprehensive online shop template to cover most online shop features.
 2. start test db: `python manage.py syncdb`
 3. create migrations if ever there are any: `python manage.py makemigrations`
 4. run migrations: `python manage.py migrate`
-5. run online shop locally: `python manage.py runserver` (captures the terminal)
+5. specify e-mail and password for automated e-mail sending (only configured for zohomail). `export EMAIL=<email> && export PASSWORD=<password>`
+6. run online shop locally: `python manage.py runserver` (captures the terminal)
 
 ###Monitor Async Tasks
 1. run flower on a separate terminal: `celery -A myshop flower` (captures the terminal)

@@ -23,10 +23,9 @@ def payment_notification(sender, **kwargs):
         subject = 'My Shop - Invoice no. {}'.format(order.id)
         message = 'Please see attached for the invoice for your recent\
 purchase'
-        email = EmailMessage(subject,
-                             message,
-                             'admin@myshop.com',
-                             [order.email])
+        email = EmailMessage(subject=subject,
+                             body=message,
+                             to=[order.email])
 
         #generate PDF
         html = render_to_string('orders/order/pdf.html', {'order': order})
@@ -40,6 +39,6 @@ purchase'
                      'application/pdf')
 
         #send e-mail
-        email.send()
+        email.send(fail_silently=False)
 
 valid_ipn_received.connect(payment_notification)
