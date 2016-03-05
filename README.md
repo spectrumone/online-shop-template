@@ -12,6 +12,8 @@ A comprehensive online shop template to cover most online shop features.
 * Integrate a payment gateway
 * Manage payment notifications
 * Export orders to CSV files
+* Generate PDF invoices dynamically
+* Automated PDF invoice sending after purchase
 
 ###Installation
 1. To create a virtualenv for python3 (using vitualenvwrapper): `mkvirtualenv --python=/usr/bin/python3 <name of venv>`.
@@ -31,11 +33,10 @@ A comprehensive online shop template to cover most online shop features.
 1. run flower on a separate terminal: `celery -A myshop flower` (captures the terminal)
 
 ###To Do
-1. Generate PDF invoices dynamically
-2. Add CSS files for PDF generation to work
-3. Automated PDF invoice sending after purchase (currently not configured from `settings.py`)
 4. Create coupon system to apply discounts
 5. Adding internationalization to online shop
 6. Build product recommendation engine
-7. Refactor app to use class based views instead
-8. Refactor for best practices
+7. Automated Email sending should be at Celery
+8. Add heartbeat and Dead Man's Snitch to Celery
+9. Refactor app to use class based views instead
+10. Refactor for best practices
