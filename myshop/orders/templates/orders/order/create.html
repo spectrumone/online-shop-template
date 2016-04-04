@@ -1,43 +1,103 @@
-{% extends "shop/base.html" %}
+{% extends "cart/base-cart.html" %}
+{% load staticfiles %}
 
-{% block title %}
-    Checkout
+{% block breadcrumb %}
+<span><a href="{% url 'cart:cart_detail' %}">Cart</a></span><i class="fa fa-chevron-right"></i><span style="color: #e6ae49;">Checkout</span><i class="fa fa-chevron-right"></i><span>Payment</span>
 {% endblock %}
 
+
 {% block content %}
-    <h1>Checkout</h1>
+    <section class="ptb ptb-sm-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-md-offset-1">
+                    <a href="{% url 'shop:product_list' %}"><button value="" type="submit" class="btn btn-lg btn-black form-full"><i class="fa fa-chevron-left left"></i>Continue Shopping</button></a>
+                </div>
+            </div>
 
-    <div class="order-info">
-        <h3>Your order</h3>
-<!--         <ul>
-            {% for item in cart %}
-            <li>
-                {{ item.quantity }}x {{ item.product.name }}
-                <span>${{ item.total_price }}</span>
-            </li>
-            {% endfor %}
-        </ul> -->
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
-            {% endfor %}
-            {% if cart.coupon %}
-                <li>
-                    "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
-                    <span>- ${{ cart.get_discount|floatformat:"2" }}</span>
-                </li>
-            {% endif %}
-        </ul>
+            <div class="spacer-30"></div>
 
-        <p>Total: ${{cart.get_total_price_after_discount|floatformat:"2" }}</p>
-    </div>
+            <div class="row">
+                
+                <div class="col-md-4 col-md-offset-1">
+                    <div class="shop-Cart-totalbox">
+                        <h4>Your order</h4>
+                        <table class="table table-border">
+                            
+                            {% for item in cart %}
+                            <tr>
+                                <th>{{ item.product.name }}</th>
+                                <td><p>{{ item.quantity }} pcs.</p></td>
+                                <td><p>${{ item.total_price }}</p></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
 
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
-        {% csrf_token %}
-    </form>
+                        <table class="table table-border">
+                            <tr>
+                                <th>Cart Subtotal :</th>
+                                <td><p>${{ cart.get_total_price }}</p></td>
+                            </tr>
+                            {% if cart.coupon %}
+                            <tr>
+                                <th>"{{ cart.coupon.code }}" coupon ({{ cart.coupon.discount }}% off)</th>
+                                <td><p>- ${{ cart.get_discount|floatformat:"2" }}</p></td>
+                            </tr>
+                            {% endif %}
+                            <tr class="shop-Cart-totalprice">
+                                <th>Total :</th>
+                                <td>${{ cart.get_total_price_after_discount|floatformat:"2" }}</td>
+                            </tr>
+                        </table>
+                        <div class="spacer-15"></div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 checkout-order" style="background-color: #f7f7f7; padding-bottom:25px;">
+                    <form action="." method="post" class="order-form">
+                    <div class="row">
+                        <div class="col-md-6" style="padding-right: 5px;">
+                            <div class="">
+                            <label for="id_first_name" style="margin-bottom:3px;">Name</label>
+                            <input id="id_first_name" maxlength="50" name="first_name" type="text" class="form-control" placeholder="First" required/>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <div class="">
+                            <label for="id_first_name" style="margin-bottom:3px;">&nbsp;</label>
+                            <input id="id_last_name" maxlength="50" name="last_name" type="text" class="form-control" placeholder="Last" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="id_email" style="margin-bottom:3px;">Email</label>
+                            <input id="id_email" maxlength="254" name="email" type="email" class="form-control" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="id_address" style="margin-bottom:3px;">Address</label>
+                            <input id="id_address" maxlength="250" name="address" type="text" class="form-control" required/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4" style="padding-right: 5px;">
+                            <label for="id_postal_code" style="margin-bottom:3px;">Postal code</label>
+                            <input id="id_postal_code" maxlength="4" name="postal_code" type="number" class="form-control" required/>
+                        </div>
+                        <div class="col-md-8" style="padding-left: 0px;">
+                            <label for="id_city" style="margin-bottom:3px;">City</label>
+                            <input id="id_city" maxlength="100" name="city" type="text" class="form-control" required/>
+                        </div>
+                    </div>
+                    <input class="btn btn-lg btn-color-b form-full" value="Place Order" type="submit"></input>
+                    {% csrf_token %}
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
 {% endblock %}

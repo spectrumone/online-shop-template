@@ -45,6 +45,7 @@ def cart_detail(request):
 
     return render(request,
                   'cart/detail.html',
-                  {'cart': cart,
+                  {'cart_detail': True,
+                   'cart': cart,
                    'coupon_apply_form': coupon_apply_form,
                    'recommended_products': recommended_products})

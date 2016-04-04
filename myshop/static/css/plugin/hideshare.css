@@ -1,0 +1,22 @@
+.hideshare-wrap {
+  position: relative;
+}
+.hideshare-list {
+  position: absolute;
+  top: -11px;
+  left: 35px;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+.hideshare-list li {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  margin: 12px 3px;
+}
+.hideshare-wrap span {
+  display: none;
+}

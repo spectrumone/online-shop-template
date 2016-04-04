@@ -1,39 +1,312 @@
 {% extends "shop/base.html" %}
-{% load static %}
+{% load staticfiles %}
 
 {% block title %}
-    {% if category %}{{ category.title }}{% else %}Products{% endif %}
+    {{ product.name }}
+{% endblock %}
+
+{% block stylesheets %}
+<link href="{% static 'css/plugin/smoothproducts.css' %}" rel="stylesheet" />
+<link href="{% static 'css/plugin/hideshare.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
-    <div class="product-detail">
-        <img src="{% if product.image %}{{ product.image.url }}{% else %}
-    {% static 'img/no_image.png' %}{% endif %}">
-        <h1>{{ product.name }}</h1>
-        <h2><a href="{{ product.category.get_absolute_url }}">
-                {{ product.category }}</a></h2>
-        <p class="price">${{ product.price }}</p>
-        <form action="{% url 'cart:cart_add' product.id %}" method="post">
-            {{ cart_product_form }}
-            {% csrf_token %}
-            <input type="submit" value="add to cart">
-        </form>
-            {{ product.description|linebreaks }}
 
-    {% if recommended_products %}
-        <div class="recommendations">
-            <h3>People who bought this also bought</h3>
-            {% for p in recommended_products %}
-                <div class="item">
-                    <a href="{{ p.get_absolute_url }}">
-                        <img src="{% if p.image %}{{ p.image.url }}{% else %}
-                                {% static 'img/no_image.png' %}{% endif %}">
-                    </a>
-                    <p><a href="{{p.get_absolute_url}}">{{p.name}}</a></p>
+
+<section id="shop-item" class="ptb ptb-sm-80 pb-60">
+    <div class="container">
+        <div class="row ">
+            <!-- Shop Item -->
+            <div class="col-md-6 mb-sm-60">
+
+                <div class="shop-detail-item">
+                    <!--Item Images-->
+                    <div class="sp-wrap">
+                        <a href="{{ product.image.url }}">
+                            <img src="{{ product.image.url }}" alt="">
+                        </a>
+                        <a href="{{ product.image.url }}">
+                            <img src="{{ product.image.url }}" alt="">
+                        </a>
+                        <a href="{{ product.image.url }}">
+                            <img src="{{ product.image.url }}" alt="">
+                        </a>
+                        <a href="{{ product.image.url }}">
+                            <img src="{{ product.image.url }}" alt="">
+                        </a>
+
+                    </div>                    
+                    <!-- End Item Images -->
+
+                    <!-- Item zoom -->
+                    <div class="sp-full-screen"><a class="cbox-gallary1" href="#"><i class="fa fa-search-plus"></i>Zoom</a></div>
+                    <!-- End Item zoom -->
+
                 </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+            </div>
+            <!-- End Shop Item -->
 
+            <!-- Shop info -->
+            <div class="col-md-6">
+                <div class="shop-detail-info">
+                    <h4>{{ product.name }}</h4>
+                    <div class="shop-item-price mtb-15"><span>$399.00</span></div>
+                    <hr />
+                    <ul class="project-detail-block pt-15">
+                        <li>
+                            <p>
+                                Material: 70% Cotton, 25% Polyester, 5% Lycra
+                            </p>
+                        </li>
+                        <li>
+                            <p>Made To Order</p>
+                        </li>
+                        <li>
+                            <p>Ships Worldwide from Manila, Philippines</p>
+                        </li>
+                        <li>
+                            <p>
+                                No. of Reviews:<a href="#"><b> 75</b></a>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Favorited by:<a href="#"><b> 100</b></a>
+                            </p>
+                        </li>
+                    </ul>
+                    
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="cart-box">
+                            <label for="qty">Qty :</label>
+                            <input type="number" id="id_quantity" name="quantity" value="1" max="99" min="1" class="input-lg" required="required" />
+                        </div>
+                        <input id="id_update" name="update" type="hidden" value="False" />
+    
+                        <button type="submit" class="btn btn-lg btn-color-a form-full"><i class="fa fa-shopping-cart left"></i>Add To Cart</button>
+                    </form>
+
+                    <ul class="list-none-ib ptb-15 text-cap">
+                        <li class="mr-30"><a class=""><i class="fa fa-heart left"></i>Add to wishlist</a></li>
+                        <li><a class="share"><i class="fa fa-share-alt left"></i>Share</a></li>
+                    </ul>
+
+                    <!-- Tab -->
+                    <div class="tabs mt-15">
+
+                        <ul>
+                            <li><a href="#tabs-1">Description</a></li>
+                            <li><a href="#tabs-2">Reviews</a></li>
+                            <li><a href="#tabs-3">Shipping Policies</a></li>
+                        </ul>
+
+                        <div class="ui-tab-content">
+                            <!-- Description -->
+                            <div id="tabs-1">
+                                <p>{{ product.description|linebreaks }}</p>
+                            </div>
+                            <!-- End Description -->
+
+                            <!-- Review -->
+                            <div id="tabs-2">
+                                <div class="post-comment">
+                                    <ul class="comment-list mb-30 mt-15">
+                                        <li>
+                                            <div class="comment-avatar">
+                                                <img src="img/user-av.jpg">
+                                            </div>
+                                            <div class="">
+                                                <div class="comment-detail">
+                                                    <h6>John Doe</h6>
+                                                    <div class="post-meta">
+                                                        <span>March 16, 2015</span> <span>|</span>
+                                                        <span class="star-rat">
+                                                            <a><i class="fa fa-star"></i></a>
+                                                            <a><i class="fa fa-star"></i></a>
+                                                            <a><i class="fa fa-star-o"></i></a>
+                                                            <a><i class="fa fa-star-o"></i></a>
+                                                            <a><i class="fa fa-star-o"></i></a>
+                                                        </span>
+
+                                                    </div>
+                                                    <p>Hendrerit id Maecenas tempus tellus eget lorem.</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <h5>Write a Review</h5>
+                                <form>
+                                    <div class="post-comment-star">
+                                        <label>Ratting :</label>
+                                        <div class="star-rat">
+                                            <a><i class="fa fa-star"></i></a>
+                                            <a><i class="fa fa-star"></i></a>
+                                            <a><i class="fa fa-star-o"></i></a>
+                                            <a><i class="fa fa-star-o"></i></a>
+                                            <a><i class="fa fa-star-o"></i></a>
+                                        </div>
+                                    </div>
+                                    <input type="text" style="max-width: 250px; width: 100%;" placeholder="Enter Your Name" class="input-sm mb-15" required="" />
+                                    <div class="clearfix"></div>
+                                    <textarea placeholder="Comment" name="message" id="message" required="" class="form-full mb-15"></textarea>
+                                    <button value="" type="submit" class="btn btn-xs btn-black">Submit Review</button>
+                                </form>
+                            </div>
+                            <!-- End Review -->
+
+                            <!-- Data sheet -->
+                            <div id="tabs-3">
+                                <table class="table">
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Info</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Compositions</p></td>
+                                        <td colspan="2"><p>Shipping & Policies
+One shoulder dress with a twist. Elegant, unique, versatile, the dress is structured so that the sleeve flips around the neck and can be worn on either arms. Brought by popular demand, we're happy to now present the pencil, midi length version of this timeless piece. Chic and elegant, the dress is made of high quality stretch jersey. It is our original design, inspired by our love for figure skating. It is so versatile, it can be worn at a wedding, prom, cocktail party, or just slip it on and wear with your boots for an effortless street style.
+</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Shipping</p></td>
+                                        <td><p>INTERNATIONAL ORDERS<br/>
+The postal service used may vary depending on your location, however I will keep you updated and will provide tracking numbers where applicable. Please check your country's customs regulations, any import duties and/or taxes are the responsibility of the buyer to pay.
+<br/><br/>
+DISPATCH TIME
+<br/>
+The turnaround times for each item are stated in the item's listing. If you need an item faster then please contact me and I will do my best to assist.
+<br/><br/>
+Once you have placed an order, you are able to check the 'dispatch by' date for your item by viewing your receipt on the Etsy website. In many cases I will be able to post your item before this date, however if I have a large workload at the time it may not be possible and some orders may not be posted until the 'dispatch by' date.
+<br/><br/>
+In the very rare occasion that I will be unable to fulfil your order before the dispatch by date I will contact you to asap discuss the options.
+<br/><br/>
+DAMAGED IN TRANSIT<br/>
+In the event that your item has been damaged during postal transit please contact me as soon as possible with photographs and details of the damage. This will enable me to rectify the situation quickly.</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Refunds and Exchanges</p></td>
+                                        <td><p>
+If you are unhappy with your order for any reason please contact us within 7 working days of receiving your package. We will do our best to resolve the problem quickly.<br/>
+<br/>
+
+FAULTY ITEMS<br/>
+In the event that you believe your item is faulty or is suffering from a defect please contact me as soon as possible providing details of the fault. I will then consider the best course of action (exchange, repair etc)<br/>
+<br/>
+ALL OTHER ITEMS<br/>
+Items may be returned to me within 14 days of receipt in an unused and resalable condition. You will be liable for all postage costs for any items which are returned. Refunds will be issued within 14 days of the item been received back by me and being inspected for any wear or damage. When returning items please consider a tracked or insured service as I am not responsible for any returns lost in transit.</p></td>
+                                    </tr>
+                                </table>
+                           </div> 
+                            <!-- End Data sheet -->
+
+                        </div>
+                    </div>
+                    <!-- End Tab -->
+
+                </div>
+            </div>
+            <!-- End Shop info -->
+        </div>
     </div>
+
+</section>
+<!-- End Shop Item Section -->
+
+<hr />
+
+<!-- Related Product Slider-->
+<section class="ptb-60 ptb-sm-80">
+    <div class="container">
+        <h4>Customers who bought this also bought</h4>
+        <div class="spacer-30"></div>
+        <div class="row">
+            <div class="owl-carousel item4-carousel nf-carousel-theme o-flow-hidden">
+
+                {% for p in recommended_products %}
+                <div class="item">
+                    <div class="nf-col-padding">
+                        <div class="item-box">
+                            <!-- Shop item images -->
+                            <div class="shop-item">
+                                <div class="item-img">
+                                    <img class="list-item" src="{{ p.image.url }}" />
+                                </div>
+                                <div class="item-mask">
+                                    <div class="item-mask-detail">
+                                        <div class="item-mask-detail-ele">
+                                            <a class="btn btn-line-xs btn-white-line" href="{{ p.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Add To Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Shop item images -->
+
+                            <!-- Shop item info -->
+                            <div class="shop-item-info">
+                                <a href="shop-detail.html">
+                                    <h6 class="shop-item-name">{{ p.name }}</h6>
+                                </a>
+                                <div class="shop-item-price"><span>{{ p.price }}</span></div>
+                            </div>
+                            <!-- Shop item info -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                {% for p in category_products %}
+                <div class="item">
+                    <div class="nf-col-padding">
+                        <div class="item-box">
+                            <!-- Shop item images -->
+                            <div class="shop-item">
+                                <div class="item-img list-item">
+                                    <img class="list-item" src="{{ p.image.url }}" />
+                                </div>
+                                <div class="item-mask">
+                                    <div class="item-mask-detail">
+                                        <div class="item-mask-detail-ele">
+                                            <a class="btn btn-line-xs btn-white-line" href="{{ p.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Add To Cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Shop item images -->
+
+                            <!-- Shop item info -->
+                            <div class="shop-item-info">
+                                <a href="shop-detail.html">
+                                    <h6 class="shop-item-name">{{ p.name }}</h6>
+                                </a>
+                                <div class="shop-item-price"><span>{{ p.price }}</span></div>
+                            </div>
+                            <!-- Shop item info -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<div class="spacer-90"></div>
+<div class="spacer-90"></div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/plugin/hideshare.js' %}"></script>
+<script src="{% static 'js/plugin/smoothproducts.js' %}"></script>
+<script type="text/javascript">
+    $(window).load(function () {
+        $('.sp-wrap').smoothproducts();
+        $(".share").hideshare();
+    });
+</script>
+
 {% endblock %}

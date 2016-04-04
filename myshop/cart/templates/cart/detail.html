@@ -1,105 +1,117 @@
-{% extends "shop/base.html" %}
-{% load static %}
+{% extends "cart/base-cart.html" %}
+{% load staticfiles %}
 
-{% block title %}
-    Your shopping cart
+{% block breadcrumb %}
+<span style="color: #e6ae49;">Cart</span><i class="fa fa-chevron-right"></i><span>Checkout</span><i class="fa fa-chevron-right"></i><span>Payment</span>
 {% endblock %}
 
 {% block content %}
-    <h1>Your shopping cart</h1>
-    <table class="cart">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Product</th>
-                <th>Remove</th>
-                <th>Unit Price</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in cart %}
-                {% with product=item.product %}
-                    <tr>
-                        <td>
-                            <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.image %}{{ product.image.url }}
-                                    {% else %}{% static 'img/no_image.png' %}{% endif %}">
-                            </a>
-                        </td>
-                        <td>{{ product.name }}</td>
-
-                        <td>
-                            <form action="{% url 'cart:cart_add' product.id %}" method="post">
-                                {{ item.update_quantity_form.quantity }}
-                                {{ item.update_quantity_form.update }}
-                                <input type="submit" value="Update">
-                                {% csrf_token %}
-                            </form>
-                        </td>
-
-                        <td><a href="{% url 'cart:cart_remove' product.id %}">Remove</a></td>
-                        <td class="num">${{ item.price }}</td>
-                        <td class="num">${{ item.total_price }}</td>
-                    </tr>
-                {% endwith %}
-            {% endfor %}
-<!--             <tr class="total">
-                <td>Total</td>
-                <td colspan="4"></td>
-                <td class="num">${{ cart.get_total_price }}</td>
-            </tr> -->
-            {% if cart.coupon %}
-                <tr class="subtotal">
-                    <td>Subtotal</td>
-                    <td colspan="4"></td>
-                    <td class="num">${{ cart.get_total_price }}</td>
-                </tr>
-                <tr>
-                    <td>
-                        "{{ cart.coupon.code }}" coupon
-                        ({{ cart.coupon.discount }}% off)
-                    </td>
-                    <td colspan="4"></td>
-                    <td class="num neg">
-                        - ${{ cart.get_discount|floatformat:"2" }}
-                    </td>
-                </tr>
-            {% endif %}
-                <tr class="total">
-                    <td>Total</td>
-                    <td colspan="4"></td>
-                    <td class="num">
-                        ${{ cart.get_total_price_after_discount|floatformat:"2" }}
-                    </td>
-                </tr>
-        </tbody>
-    </table>
-
-    {% if recommended_products %}
-        <div class="recommendations">
-            <h3>People who bought this also bought</h3>
-            {% for p in recommended_products %}
-                <div class="item">
-                    <a href="{{ p.get_absolute_url }}">
-                        <img src="{% if p.image %}{{ p.image.url }}{% else %}
-                                {% static 'img/no_image.png' %}{% endif %}">
-                    </a>
-                    <p><a href="{{p.get_absolute_url}}">{{p.name}}</a></p>
+    <section class="ptb ptb-sm-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="{% url 'shop:product_list' %}"><button value="" type="submit" class="btn btn-lg btn-black form-full"><i class="fa fa-chevron-left left"></i>Continue Shopping</button></a>
                 </div>
-            {% endfor %}
+            </div>
+
+            <div class="spacer-30"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table checkout table-border">
+                        <tr class="gray-bg">
+                            <th class="hidden-xs"></th>
+                            <th>Product</th>
+                            <th class="hidden-xs">Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                        {% for item in cart %}
+                        {% with product=item.product %}
+                        <tr>
+                            <td class="hidden-xs">
+                                <a href="{{ product.get_absolute_url }}">
+                                    <img class="list-item" src="{{ product.image.url }}" />
+                                </a>
+                            </td>
+                            <td>
+                                <h4><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+                                <p class="checkout-item-descript">Material: 70% Cotton, 25% Polyester, 5% Lycra</p>
+                                <p class="checkout-item-descript">Made To Order</p>
+                                <p class="checkout-item-descript">Ships Worldwide from Manila, Philippines</p>
+                                <div class="spacer-15"/>
+                            </td>
+                            <td class="hidden-xs"><p>${{ product.price }}</p></td>
+                            <td>
+                                <form>
+                                    <input type="number" value="{{ item.quantity }}" max="50" min="1" style="width: 100%; max-width: 70px;" class="input-md">
+                                </form>
+                            </td>
+                            <td><p>${{ item.total_price }}</p></td>
+                            <td>
+                                <a href="{% url 'cart:cart_remove' product.id %}"class="right-icon" style="font-size:20px;">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endwith %}
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+            <div class="row ptb-30">
+                <div class="col-md-8">
+                    <form action="{% url 'coupons:apply' %}" method="post">
+                        {% csrf_token %}
+                        <input class="input-sm" id="id_code" name="code" type="text" placeholder="Apply a coupon!"/>
+                        <input type="submit" value="Apply" name="apply_coupon" class="btn btn-md btn-black">
+                    </form>
+                </div>
+            </div>
+            <hr />
+
+<!-- 
+                <div class="col-md-4 mb-sm-60">
+                    <h4>Calculate Shipping</h4>
+                    <form class="">
+                        <select class="form-full">
+                            <option>United Kingdom</option>
+                            <option>france</option>
+                            <option>USA</option>
+                        </select>
+                        <input type="text" class="input-sm form-full" placeholder="State" />
+                        <input type="text" class="input-sm form-full" placeholder="Postcode / Zip" />
+                        <button class="btn btn-md btn-black" value="1" name="calc_shipping" type="submit">Get A Quote</button>
+                    </form>
+                </div>
+ -->
+            <div class="spacer-15"></div>
+            <div class="col-md-4 col-md-offset-8" style="padding-left: 0px; padding-right: 0px;">
+                <div class="shop-Cart-totalbox">
+                    <h4>Cart Totals</h4>
+                    <table class="table table-border">
+                        <tr>
+                            <th>Cart Subtotal :</th>
+                            <td><p>${{ cart.get_total_price }}</p></td>
+                        </tr>
+                        {% if cart.coupon %}
+                        <tr>
+                            <th>"{{ cart.coupon.code }}" coupon ({{ cart.coupon.discount }}% off)</th>
+                            <td><p>- ${{ cart.get_discount|floatformat:"2" }}</p></td>
+                        </tr>
+                        {% endif %}
+                        <tr class="shop-Cart-totalprice">
+                            <th>Total :</th>
+                            <td>${{ cart.get_total_price_after_discount|floatformat:"2" }}</td>
+                        </tr>
+                    </table>
+                    <a href="{% url 'orders:order_create' %}"><button value="" type="submit" class="btn btn-lg btn-color-b form-full">Proceed to Checkout<i class="fa fa-chevron-right right"></i></button></a>
+                    <div class="spacer-15"></div>
+                </div>
+            </div>
+            </div>
         </div>
-    {% endif %}
-
-    <p>Apply a coupon:</p>
-    <form action="{% url 'coupons:apply' %}" method="post">
-        {{ coupon_apply_form }}
-        <input type="submit" value="Apply">
-        {% csrf_token %}
-    </form>
-
-    <p class="text-right">
-        <a href="{% url 'shop:product_list' %}" class="button light">Continue shopping</a>
-        <a href = "{% url 'orders:order_create' %}" class="button">Checkout</a>
-    </p>
+    </section>
 {% endblock %}

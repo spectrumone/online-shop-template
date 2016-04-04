@@ -29,6 +29,7 @@ def order_create(request):
                                          product=item['product'],
                                          price=item['price'],
                                          quantity=item['quantity'])
+            # clears the cart
             cart.clear()
             # launch the asyncronous task
             order_created.delay(order.id) 
@@ -47,6 +48,7 @@ def admin_order_detail(request, order_id):
     return render(request,
                   'admin/orders/order/detail.html',
                   {'order': order})
+
 
 @staff_member_required
 def admin_order_pdf(request, order_id):

@@ -1,34 +1,331 @@
-{% load static %}
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="%utf-8">
+    <meta charset="utf-8" />
     <title>{% block title %}My shop{% endblock %}</title>
-    <link href="{% static "css/base.css" %}" rel="stylesheet">
-</head> 
-<body>
-    <div id="header">
-        <a href="/" class="logo">My shop</a>
-    </div>
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 
-    <div id="subheader">
-        <div class="cart">
-            {% with total_items=cart|length %}
-                {% if cart|length > 0 %}
-                    Your cart:
-                    <a href="{% url 'cart:cart_detail' %}">
-                        {{ total_items }} item{{ total_items|pluralize }},
-                        ${{ cart.get_total_price }}
-                    </a>
-                {% else %}
-                    Your cart is empty.
-                {% endif %}
-            {% endwith %}
+    <!-- Favicone Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'img/favicon.png' %}">
+
+    <!-- CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/ionicons.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/plugin/jPushMenu.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/plugin/animate.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/jquery-ui.css' %}" rel="stylesheet" type="text/css" />
+    {% block stylesheets %}
+    {% endblock %}
+
+</head>
+
+<body class="full-intro">
+
+    <!-- Preloader -->
+<!--     <section id="preloader">
+        <div class="loader" id="loader">
+            <div class="loader-img"></div>
         </div>
-    </div>
-    <div id="content">
-        {% block content %}
+    </section> -->
+    <!-- End Preloader -->
+
+    <!-- Sidemenu -->
+    <!--End Si demenu -->
+
+    <!-- Search menu Top -->
+    <section class=" top-search-bar cbp-spmenu cbp-spmenu-horizontal cbp-spmenu-top">
+        <div class="container">
+            <div class="search-wraper">
+                <input type="text" class="input-sm form-full" placeholder="Search..." name="search" />
+                <a class="search-bar-icon"><i class="fa fa-search"></i></a>
+                <a class="bar-close toggle-menu menu-top push-body"><i class="ion ion-android-close"></i></a>
+            </div>
+        </div>
+    </section>
+    <!--End Search menu Top -->
+
+    <!-- Site Wraper -->
+    <div class="wrapper">
+
+        {% block header %}
+        <!-- HEADER -->
+        <header class="header">
+            <div class="container">
+
+                <!-- logo -->
+<!--                 <div class="logo">
+                    <a href="home.html">
+                        <img class="l-black" src="{% static 'img/logo-black.png' %}" />
+                        <img class="l-white" src="{% static 'img/logo-white.png' %}" />
+                        <img class="l-color" src="{% static 'img/logo-color.png' %}" />
+                    </a>
+                </div> -->
+                <!--End logo-->
+
+                <!-- Rightside Menu (Search, Cart, Bart icon) -->
+                <div class="side-menu-btn">
+                    <ul>
+                        <!-- Search Icon -->
+                        <li class="">
+                            <a class="right-icon search toggle-menu menu-top push-body"><i class="fa fa-search"></i></a>
+                        </li>
+                        <!-- End Search Icon -->
+
+                        <!-- Cart Icon -->
+                        <li class="">
+                            {% if not cart_detail %}
+                            <a href="{% url 'cart:cart_detail' %}" class="right-icon cart">
+                                <i class="fa fa-shopping-cart"></i>
+                                {% if cart|length > 0 %}
+                                <span class="cart-notification">{{ cart|length }}</span>
+                                {% endif %}
+                            </a>
+                            <!-- Cart Dropdown List -->
+                            <div class="cart-dropdown">
+                                
+                                <ul class="cart-list">
+                                {% for item in cart %}
+                                {% with product=item.product %}
+                                    <li class="light-color">
+                                        <div class="media">
+                                            <a class="pull-left">
+                                                <img src="{{ product.image.url }}" alt="fashion" />
+                                            </a>
+                                            <div class="media-body">
+                                                <h6><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h6>
+                                                <p><span class="pull-left">{{ item.quantity }} pcs</span><span class="pull-right totle">${{ item.total_price }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {% endwith %}
+                                {% endfor %}
+                                </ul>
+
+                                {% with total_items=cart|length %}
+                                {% if cart|length > 0 %}
+                                <p class="cart-sub-totle">
+                                    <span class="pull-left">Cart Subtotal</span><span class="pull-right totle">
+                                    <strong>${{ cart.get_total_price }}</strong></span>
+                                </p>
+                                <div class="clearfix"></div>
+
+                                {% else %}
+                                <p>Your cart is empty.</p>
+                                {% endif %}
+                                <div class="cart-checkout-btn">
+                                    <a href="{% url 'cart:cart_detail' %}" class="btn btn-md btn-color-b form-full checkout">Checkout</a>
+                                </div>
+                                {% endwith %}
+                            </div>
+                            {% else %}
+                            <a class="right-icon" style="pointer-events:none; color:#e6ae49;">
+                                <i class="fa fa-shopping-cart"></i>
+                            </a>
+                            {% endif %}
+
+                            <!-- End Cart Dropdown List -->
+                        </li>
+                        <!-- End Cart Icon -->
+
+                        <!--Sidebar Menu Icon-->
+                        <!-- End Sidebar Menu Icon-->
+                    </ul>
+                </div>
+                <!-- End Rightside Menu -->
+
+                <!-- Navigation Menu -->
+                <nav class='navigation'>
+                    <ul>
+                        {% if all_cat %}
+                        <li>
+                            <li class="selected-nav">
+                            <a disabled="disabled">ALL</a>
+                        </li>
+                        {% else %}
+                        <li>
+                            <a href="{% url 'shop:product_list' %}">ALL</a>
+                        </li>
+                        {% endif %}                        
+
+                        {% for c in categories %}
+                        {% if category.slug == c.slug %}
+                        <li class="selected-nav">
+                            <a disabled="disabled">{{ c.name|upper }}</a>
+                        {% else %}
+                        <li>
+                            <a href="{{ c.get_absolute_url }}">{{ c.name|upper }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </nav>
+                <!--End Navigation Menu -->
+            </div>
+        </header>
+        <!-- END HEADER -->
         {% endblock %}
+
+        <!-- CONTENT --------------------------------------------------------------------------------->
+
+        <!-- Intro Section -->
+        <section class="inner-intro inner-intro-small">
+            <div class="container">
+                <div class="row title">
+                    <h2 class="h2">{% block intro_title %}Clothes Shop{% endblock %}</h2>
+                    <div class="page-breadcrumb">
+                        {% block breadcrumb %}<a>Home</a>/<a>Shop</a>/<span>Right Sidebar</span>{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <!-- End Intro Section -->
+
+        <!-- Shop Item Section -->
+            {% block content %}
+            {% endblock %}
+        <!-- End Shop Item Section -->
+
+        <!-- Client Logos Section -->
+        <!-- End Client Logos Section -->
+
+        <!-- FOOTER -->
+        <div class="spacer-90"></div>
+        <div class="spacer-90"></div>
+        <hr />
+        {% block footer %}
+        <footer class="footer pt-80">
+            <div class="container">
+                <div class="row mb-60">
+                    <!-- Logo -->
+                    <div class="col-md-3 col-sm-3 col-xs-12 mb-xs-30">
+                        <h3>Spectrum One</h3>
+<!--                         <a class="footer-logo" href="home.html">
+                            <img src="{% static 'img/logo-black.png' %}" /></a> -->
+                    </div>
+                    <!-- Logo -->
+
+                    <!-- Newsletter -->
+                    <div class="col-md-4 col-sm-5 col-xs-12 mb-xs-30">
+                        <div class="newsletter">
+                            <form>
+                                <input type="email" class="newsletter-input input-md newsletter-input mb-0" placeholder="Enter Your Email">
+                                <button class="newsletter-btn btn btn-xs btn-white" type="submit" value=""><i class="fa fa-angle-right mr-0"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End Newsletter -->
+
+                    <!-- Social -->
+                    <div class="col-md-3 col-md-offset-2 col-sm-4 col-xs-12">
+                        <ul class="social">
+                            <li><a target="_blank" href="https://www.twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                            <li><a target="_blank" href="https://instagram.com/"><i class="fa fa-instagram"></i></a></li>
+                            <li><a target="_blank" href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                            <li><a target="_blank" href="https://vimeo.com/"><i class="fa fa-vimeo-square"></i></a></li>
+                            <li><a target="_blank" href="https://www.behance.net/"><i class="fa fa-behance"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- End Social -->
+                </div>
+                <!--Footer Info -->
+                <div class="row footer-info mb-60">
+                    <div class="col-md-3 col-sm-12 col-xs-12 mb-sm-30">
+                        <p class="mb-xs-0">My name is Antonio Carlos Ortiz and this is the online shop I created from scratch. Just in case you accidentally bought the product, I will return the money to you. Since this will only focus on the online shop, the links redirect to nowhere.</p>
+                        <a class="btn-link-a" href="about-1.html">Read More</a>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 mb-sm-30 mb-xs-0">
+                        <ul class="link">
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Portfolio</a></li>
+                            <li><a href="#">Login & Signup</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12 mb-sm-30">
+                        <ul class="link">
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Shopping Cart</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Home</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <p>143, Mother Ignacia Ave., South Triangle, Quezon City, Philippines.</p>
+                        <ul class="link-small">
+                            <li><a href="mailto:yourname@domain.com"><i class="fa fa-envelope-o left"></i>ortizantoniocarlos@gmail.com</a></li>
+                            <li><a><i class="fa fa-phone left"></i>+63 917 706 4654</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Footer Info -->
+            </div>
+
+            <hr />
+
+            <!-- Copyright Bar -->
+            <!-- End Copyright Bar -->
+
+        </footer>
+        {% endblock %}
+        <!-- END FOOTER -->
+
+        <!-- Scroll Top -->
+        <a class="scroll-top">
+            <i class="fa fa-angle-double-up"></i>
+        </a>
+        <!-- End Scroll Top -->
+
     </div>
+    <!-- Site Wraper End -->
+
+    <input type="hidden" id="refreshed" value="no">
+    <!-- JS -->
+
+    <script src="{% static 'js/jquery-1.11.2.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.easing.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.flexslider.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/background-check.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.fitvids.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.viewportchecker.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.stellar.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/wow.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.colorbox-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/owl.carousel.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/isotope.pkgd.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/masonry.pkgd.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/imagesloaded.pkgd.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jPushMenu.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/jquery.fs.tipper.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/plugin/mediaelement-and-player.min.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/navigation.js' %}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    onload=function(){
+    var e=document.getElementById("refreshed");
+    if(e.value=="no")e.value="yes";
+    else{e.value="no";location.reload();}
+    }
+    </script>
+
+    {% block js %}
+    {% endblock %}
+
 </body>
 </html>

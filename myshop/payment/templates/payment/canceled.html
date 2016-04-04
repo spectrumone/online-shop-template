@@ -1,7 +1,30 @@
-{% extends 'shop/base.html' %}
+{% extends "cart/base-cart.html" %}
+{% load staticfiles %}
+
+{% block breadcrumb %}
+<span>Cart</span><i class="fa fa-chevron-right"></i><span>Checkout</span><i class="fa fa-chevron-right"></i><span style="color: #e6ae49;">Payment</span>
+{% endblock %}
 
 
 {% block content %}
-	<h1>Your payment has not been processed</h1>
-	<p>There was a problem processing your payment.</p>
-{% endblock %}s
+    <section class="ptb ptb-sm-80">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="{% url 'shop:product_list' %}"><button value="" type="submit" class="btn btn-lg btn-black"><i class="fa fa-chevron-left left"></i>Cancel Order and Continue Shopping</button></a>
+                </div>
+            </div>
+
+            <div class="spacer-30"></div>
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4>Your payment has not been processed</h4>
+                    <p>There was a problem processing your payment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="spacer-90"></div>
+{% endblock %}
