@@ -9,6 +9,7 @@ cffi==1.5.2
 cssselect==0.9.1
 Django==1.8.6
 django-paypal==0.2.5
+django-taggit==0.18.0
 flower==0.8.4
 futures==3.0.4
 html5lib==0.9999999

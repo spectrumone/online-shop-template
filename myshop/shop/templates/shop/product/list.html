@@ -89,8 +89,13 @@
                         <hr />
                         <div id="range-slider" class="mtb-25"></div>
                         <p class="">
-                            <label for="price-amount"><span class="price-amount-from"></span>- <span class="price-amount-to"></span></label>
-                            <button value="" type="submit" class="btn btn-xs btn-black pull-right">Filter</button>
+
+                            <form action="." method="GET">
+                                <label for="price-amount"><span class="price-amount-from"></span>- <span class="price-amount-to"></span></label>
+                                <input id="price-from" name="price-from" type="number" style="display:none;"></input>
+                                <input id="price-to" name="price-to" type="number" style="display:none;"></input>
+                                <button value="" type="submit" class="btn btn-xs btn-black pull-right">Filter</button>
+                            </form>
                         </p>
                     </div>
                     <!-- End Price Filter -->

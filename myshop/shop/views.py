@@ -5,6 +5,11 @@ from cart.forms import CartAddProductForm
 
 
 def product_list(request, category_slug=None):
+    # price_filter_start = request.GET.get('price_filter_start', None)
+    # price_filter_end = request.GET.get('price_filter_end', None)
+
+    print(request.GET)
+
     category = None
     products = Product.objects.filter(available=True)
     new_products = Product.objects.order_by('pk')[:5]

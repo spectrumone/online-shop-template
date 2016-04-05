@@ -25,6 +25,9 @@ class Recommender(object):
                               amount=1)
 
     def suggest_products_for(self, products, max_results=6):
+        if not products:
+            return None
+
         product_ids = [p.id for p in products]
         if len(products) == 1:
             # only 1 product

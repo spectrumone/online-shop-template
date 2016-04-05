@@ -688,10 +688,15 @@ function jqueryUi() {
                 $(".price-amount-from").text("$" + ui.values[0]);
                 $(".price-amount-to").text("$" + ui.values[1]);
 
+                $("#price-from").val(ui.values[0]);
+                $("#price-to").val(ui.values[1]);
+
             }
         });
         $(".price-amount-from").text("$" + $("#range-slider").slider("values", 0));
         $(".price-amount-to").text("$" + $("#range-slider").slider("values", 1));
+        $("#price-from").val($("#range-slider").slider("values", 0));
+        $("#price-to").val($("#range-slider").slider("values", 1));
     });
 };
 
