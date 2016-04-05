@@ -1,11 +1,28 @@
-{% extends "shop/base.html" %}
+{% extends "cart/base-cart.html" %}
+{% load staticfiles %}
 
-{% block title %}
-    Thank you
+{% block breadcrumb %}
 {% endblock %}
 
 {% block content %}
-    <h1>Thank you</h1>
-    <p>Your order has been successfully completed. Your order number is
-        <strong>{{ order.id }}</strong></p>
+    <section class="ptb ptb-sm-80">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="{% url 'shop:product_list' %}"><button value="" type="submit" class="btn btn-lg btn-black"><i class="fa fa-chevron-left left"></i>Continue Shopping</button></a>
+                </div>
+            </div>
+
+            <div class="spacer-30"></div>
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h4>Thank you</h4>
+                        <p>Your order has been successfully completed. Your order number is <strong>{{ order.id }}</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="spacer-90"></div>        
 {% endblock %}

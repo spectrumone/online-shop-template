@@ -8,6 +8,7 @@
 {% block stylesheets %}
 {% endblock %}
 
+{% block breadcrumb %}{% endblock %}
 
 {% block content %}   
     <section id="shop-item" class="ptb ptb-sm-80">
@@ -26,11 +27,11 @@
                                 <label>Sort By</label>
                                 <select class="input-md round">
                                     <option>Default Sorting</option>
-                                    <option>Popular</option>
+<!--                                     <option>Popular</option>
                                     <option>Latest</option>
                                     <option>Average Price</option>
                                     <option>High Price</option>
-                                    <option>Low Price</option>
+                                    <option>Low Price</option> -->
                                 </select>
                             </form>
                         </div>
@@ -84,20 +85,6 @@
                 <div class="col-md-3 col-sm-4 mt-xs-30">
 
                     <!-- Price Filter -->
-                    <div class="sidebar-widget">
-                        <h5>Filter By Price</h5>
-                        <hr />
-                        <div id="range-slider" class="mtb-25"></div>
-                        <p class="">
-
-                            <form action="." method="GET">
-                                <label for="price-amount"><span class="price-amount-from"></span>- <span class="price-amount-to"></span></label>
-                                <input id="price-from" name="price-from" type="number" style="display:none;"></input>
-                                <input id="price-to" name="price-to" type="number" style="display:none;"></input>
-                                <button value="" type="submit" class="btn btn-xs btn-black pull-right">Filter</button>
-                            </form>
-                        </p>
-                    </div>
                     <!-- End Price Filter -->
 
                     <!-- Shop Categories -->

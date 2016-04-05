@@ -63,13 +63,14 @@
             <div class="container">
 
                 <!-- logo -->
-<!--                 <div class="logo">
-                    <a href="home.html">
+                <div class="logo">
+                    <a href="{% url 'shop:product_list' %}">
+                        <h3 style="margin-bottom: 0px;">Spectrum</h3><!-- 
                         <img class="l-black" src="{% static 'img/logo-black.png' %}" />
                         <img class="l-white" src="{% static 'img/logo-white.png' %}" />
-                        <img class="l-color" src="{% static 'img/logo-color.png' %}" />
+                        <img class="l-color" src="{% static 'img/logo-color.png' %}" /> -->
                     </a>
-                </div> -->
+                </div>
                 <!--End logo-->
 
                 <!-- Rightside Menu (Search, Cart, Bart icon) -->
@@ -183,9 +184,11 @@
             <div class="container">
                 <div class="row title">
                     <h2 class="h2">{% block intro_title %}Clothes Shop{% endblock %}</h2>
+                    {% block breadcrumb %}
                     <div class="page-breadcrumb">
-                        {% block breadcrumb %}<a>Home</a>/<a>Shop</a>/<span>Right Sidebar</span>{% endblock %}
+                        <a>Home</a>/<a>Shop</a>/<span>Right Sidebar</span>
                     </div>
+                    {% endblock %}
                 </div>
             </div>
         </section>

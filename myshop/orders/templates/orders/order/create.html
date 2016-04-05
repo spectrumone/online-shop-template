@@ -2,7 +2,9 @@
 {% load staticfiles %}
 
 {% block breadcrumb %}
+<div class="page-breadcrumb">
 <span><a href="{% url 'cart:cart_detail' %}">Cart</a></span><i class="fa fa-chevron-right"></i><span style="color: #e6ae49;">Checkout</span><i class="fa fa-chevron-right"></i><span>Payment</span>
+</div>
 {% endblock %}
 
 
